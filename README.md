@@ -5,11 +5,11 @@ Portable power station with many smart features
 # Design
 Features:
 - 12.8v nominal 153 Watt hour lithium iron phosphate battery pack
-- 0.96 inch 128x32 monochrome OLED ('SSD1306'), 1.3 inch 240x240 square LCD ('ST7789'), 1x joystick and 4x buttons for easy interacting
+- 0.96 inch 128x32 monochrome OLED ('SSD1306'), 1.3 inch 240x240 RGB LCD ('ST7789'), 1x joystick and 4x buttons for easy interaction
 - Raspberry Pi Pico W microcontroller board with wifi and bluetooth
 - 2x USB-C and 2x USB-A output port capable of outputting 72 Watts, supports PD, PPS, QC fast charging protocols
 - 10w Qi wireless charger
-- 1x USB-C and 1x XT-60 input port for charging at upto 75 Watts
+- USB-C connector paired with CH224k USB-C sink controller and XT-60 connector for power input at upto 75w
 - 19 addressable RGB lights ('WS2812b')
 - TEMT6000 abient light sensor for automatic LCD brightness adjustment
 - 1x XT-60 for direct battery voltage output at upto 256 Watts
