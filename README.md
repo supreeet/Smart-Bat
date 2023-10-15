@@ -6,7 +6,7 @@
 ## Body
 - 3d printed PLA body, the front and back being seperate 3d prints
 - 8 threaded inserts to hold battery pack, components module in place
-- reinforcing carbon fibre rods glued with 2 part epoxy on bottom and back panel
+- reinforcing carbon fibre rods glued with 2 part epoxy on bottom 
 - top cover is laser cut acrylic sheet held with 8 m3 screws (cover screw mounts are not visible in the following picture)
 ![PXL_20230427_144759748](https://github.com/supreeet/Smart-Bat/assets/117578605/0d0594ba-5732-4e7c-8b5e-9874ee02e547)
 
