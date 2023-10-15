@@ -3,6 +3,9 @@
 ![PXL_20231012_155246602 NIGHT~2](https://github.com/supreeet/Smart-Bat/assets/117578605/c3b0216e-6c81-44da-8e9c-a7f24dcf5ddc)
 
 # Design
+## Body
+3d printed PLA body with reinforcing carbon fibre rods glued with 2 part epoxy on bottom and back panel, the top cover is laser cut acrylic sheet held with 8 m3 screws
+![PXL_20230427_144759748](https://github.com/supreeet/Smart-Bat/assets/117578605/0d0594ba-5732-4e7c-8b5e-9874ee02e547)
 Features:
 - 12.8v nominal 153 Watt hour lithium iron phosphate battery pack
 - 0.96 inch 128x32 monochrome OLED ('SSD1306'), 1.3 inch 240x240 RGB LCD ('ST7789'), 1x joystick and 4x buttons for easy interaction
