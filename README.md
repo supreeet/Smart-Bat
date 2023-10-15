@@ -4,7 +4,7 @@
 
 # Design
 Features:
-- 12.8v nominal 153 Watt hour lithium iron phosphate battery pack
+- 12.8v nominal 153 Watt hour lithium iron phosphate ('LiFePo4') battery pack
 - 0.96 inch 128x32 monochrome OLED ('SSD1306'), 1.3 inch 240x240 RGB LCD ('ST7789'), 1x joystick and 4x buttons for easy interaction
 - Raspberry Pi Pico W microcontroller board with wifi and bluetooth
 - 2x USB-C and 2x USB-A output port capable of outputting 72 Watts, supports PD, PPS, QC fast charging protocols
@@ -21,6 +21,8 @@ Features:
 - 3d printed PLA body, the front and back being seperate 3d prints
 - 8 threaded inserts to hold battery pack, components module in place
 - reinforcing carbon fibre rods glued with 2 part epoxy on bottom 
-- top cover is laser cut acrylic sheet held with 8 m3 screws (cover screw mounts are not visible in the following picture)
+- top cover is laser cut acrylic sheet held with 8 m3 screws 
 ![PXL_20230427_144759748](https://github.com/supreeet/Smart-Bat/assets/117578605/0d0594ba-5732-4e7c-8b5e-9874ee02e547)
 
+## components module
+The components module holds two dc-dc voltage regulators, 4x 20A Relays with a covering pcb on top 
