@@ -23,7 +23,7 @@ Specs:
 - 19 addressable RGB lights ('WS2812b')
 - 1x XT-60 for direct battery voltage output at upto 256 Watts
 - 1x XT-60 for charging external 4s lithium ion battery at upto 33 Watts
-- 2x 5v PWM controlled BLDC cooling fans
+- 2x 5v cooling fans
 - 4 automatic input charging modes 
 
 ![PXL_20230528_164307744](https://github.com/supreeet/Smart-Bat/assets/117578605/83f174b7-149f-46f5-9416-b6dc13038b5f)
@@ -38,7 +38,7 @@ Specs:
 ![PXL_20230427_144759748](https://github.com/supreeet/Smart-Bat/assets/117578605/0d0594ba-5732-4e7c-8b5e-9874ee02e547)
 
 
-## components module
+## Components module
 The components module consists of two voltage/current sensors from Texas Instruments ('INA219'), digital potentiometer, two dc-dc voltage regulators, 4x 20A Relays with a covering pcb on top 
 
 ![PXL_20230902_114550286](https://github.com/supreeet/Smart-Bat/assets/117578605/beb3b379-55a5-48b5-94d1-038cded38f5b)
@@ -52,4 +52,8 @@ The pcb includes:
 - monochrome OLED display
 - CH224K USB-C sink controller
 - 3x voltage divider circuits for ADC conversion
-- 5x PNP transistor 
+- 5x PNP transistor
+
+## Display
+- 0.96 inch 128x32 monochrome OLED ('SSD1306')
+- 1.3 inch 240x240 RGB LCD ('ST7789')
