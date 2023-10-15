@@ -15,7 +15,7 @@ Features:
 - 1x XT-60 for direct battery voltage output at upto 256 Watts
 - 1x XT-60 for charging external 4s lithium ion battery at upto 33 Watts
 - 2x PWM controlled BLDC cooling fans
-![PXL_20231009_084659934 MP](https://github.com/supreeet/Smart-Bat/assets/117578605/b4e99a2a-5b85-415e-801a-ac9c26611902)
+![PXL_20230528_164307744](https://github.com/supreeet/Smart-Bat/assets/117578605/83f174b7-149f-46f5-9416-b6dc13038b5f)
 
 ## Body
 - 3d printed PLA body, the front and back being seperate 3d prints
