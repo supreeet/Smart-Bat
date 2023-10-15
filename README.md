@@ -10,11 +10,12 @@ Features:
 - 2x USB-C and 2x USB-A output port capable of outputting 72 Watts, supports PD, PPS, QC fast charging protocols
 - 10 Watt Qi wireless charger
 - USB-C connector paired with CH224k USB-C sink controller and XT-60 connector for power input at upto 75w
-- 19 addressable RGB lights ('WS2812b')
+- lamp mode with 3 intensities, 19 addressable RGB lights ('WS2812b')
 - TEMT6000 abient light sensor for automatic LCD brightness adjustment
 - 1x XT-60 for direct battery voltage output at upto 256 Watts
 - 1x XT-60 for charging external 4s lithium ion battery at upto 33 Watts
-- 2x PWM controlled BLDC cooling fans
+- overtemperature, overcurrent, overvoltage, undervoltage protection
+- 2x 5v PWM controlled BLDC cooling fans
 ![PXL_20230528_164307744](https://github.com/supreeet/Smart-Bat/assets/117578605/83f174b7-149f-46f5-9416-b6dc13038b5f)
 
 ## Body
@@ -26,3 +27,12 @@ Features:
 
 ## components module
 The components module holds two dc-dc voltage regulators, 4x 20A Relays with a covering pcb on top 
+![PXL_20230902_114550286](https://github.com/supreeet/Smart-Bat/assets/117578605/beb3b379-55a5-48b5-94d1-038cded38f5b)
+
+## PCB
+The [pcb] includes:
+- Raspberry Pi Pico and Pico W
+- 2x 5v dc-dc regulators
+- 2x 4 pin fan connector
+- monochrome OLED display
+- 2x voltage divider circuit for ADC conversion
