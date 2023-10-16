@@ -45,7 +45,7 @@ The components module consists of two voltage/current sensors from Texas Instrum
 
 
 ## PCB
-The pcb includes:
+The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b1258488c426cedcd1ec/pcb) includes:
 - Raspberry Pi Pico and Pico W
 - 2x 5v dc-dc regulators
 - 2x 4 pin fan connector
