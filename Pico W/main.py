@@ -126,9 +126,10 @@ password2 = 'password2'
 def wifi_on():
     wlan.active(True)
     
-    search_item1 = 'b' + ssid1
-    search_item2 = 'b' + ssid2
+    search_item1 = b'ssid1'
+    search_item2 = b'ssid2'
     data = wlan.scan()
+    print(search_item1,data)
     found = False
     for item in data:
         if search_item1 in item:
@@ -149,7 +150,9 @@ def wifi_on():
         else:
             print(ssid2)
             wlan.connect(ssid2, password2)
-    
+    else:
+        wlan.active(False)
+        return
     max_wait = 10
     while max_wait > 0:
         if wlan.status() < 0 or wlan.status() >= 3:
@@ -160,6 +163,7 @@ def wifi_on():
 
     if wlan.status() != 3:
         print('network connection failed')
+        wlan.active(False)
         return
     else:
         print('connected')
@@ -580,10 +584,16 @@ def keyB_callback(pin):
             break
     if x < 2:
         return
+    
+    if wlan.active()==False:
+        wifi_on()
+    else:
+        wifi_off()
+        
     key_B_handler()
     button_debounce_timer = time.ticks_ms()
     
-#keyB.irq(trigger=Pin.IRQ_FALLING, handler=keyB_callback)
+keyB.irq(trigger=Pin.IRQ_FALLING, handler=keyB_callback)
  
 def keyX_callback(pin):
     global button_debounce_timer, last_event_time, lfp_automatic_charging
@@ -768,8 +778,8 @@ def display():
         if wlan.active() == True:
             if wlan.status() == 3:
                 tft.text(font1, str(status[0]), 5, 200)
-            else:
-                tft.text(font1, str("               "), 5, 200)
+        else:
+            tft.text(font1, str("               "), 5, 200)
                 
     if lcd_refresh_part < 6:
         lcd_refresh_part += 1
