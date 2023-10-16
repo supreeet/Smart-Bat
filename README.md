@@ -54,10 +54,12 @@ The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b125848
 
 - 3x voltage divider circuits for ADC conversion
 - 5x PNP transistor
-![PXL_20231016_141914945](https://github.com/supreeet/Smart-Bat/assets/117578605/89fad8a6-ba0c-4199-91aa-79aecf7d10f0)
+
 
 ## Display
+
 ![PXL_20231009_084727147 MP](https://github.com/supreeet/Smart-Bat/assets/117578605/2555a323-54d2-4e25-9476-a658eb287023)
 - 0.96 inch 128x32 monochrome OLED ('SSD1306')
-![PXL_20231009_084727147 MP](https://github.com/supreeet/Smart-Bat/assets/117578605/2555a323-54d2-4e25-9476-a658eb287023)
+- 
+![PXL_20231016_141914945](https://github.com/supreeet/Smart-Bat/assets/117578605/89fad8a6-ba0c-4199-91aa-79aecf7d10f0)
 - 1.3 inch 240x240 RGB LCD ('ST7789')
