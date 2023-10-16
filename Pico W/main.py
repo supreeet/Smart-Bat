@@ -58,7 +58,6 @@ for device in I2C_devices:
     if device == 65:
         ina2_available = True
 
-
 WIDTH = 128
 HEIGHT = 32
 if oled_available == True:
@@ -114,7 +113,72 @@ if aht10_available == True:
     print("%.2f" % temp_bat + "C" + " %.2f" % humidity + "H")
 else:
     temp_bat = 0
+    
+wlan = network.WLAN(network.STA_IF)    
+status = wlan.ifconfig()
+wlan.active(False)
 
+ssid1 = 'ssid1'
+password1 = 'password1'
+ssid2 = 'ssid2'
+password2 = 'password2'
+
+def wifi_on():
+    wlan.active(True)
+    
+    search_item1 = 'b' + ssid1
+    search_item2 = 'b' + ssid2
+    data = wlan.scan()
+    found = False
+    for item in data:
+        if search_item1 in item:
+            wifi_found = search_item1
+            print( wifi_found + " found")
+            found = True
+            break
+        if search_item2 in item:
+            wifi_found = search_item2
+            print( wifi_found + " found")
+            found = True
+            break
+            
+    if found:
+        if wifi_found == search_item1:
+            print(ssid1)
+            wlan.connect(ssid1, password1)
+        else:
+            print(ssid2)
+            wlan.connect(ssid2, password2)
+    
+    max_wait = 10
+    while max_wait > 0:
+        if wlan.status() < 0 or wlan.status() >= 3:
+            break
+        max_wait -= 1
+        print('waiting for connection...')
+        time.sleep(1)
+
+    if wlan.status() != 3:
+        print('network connection failed')
+        return
+    else:
+        print('connected')
+        status = wlan.ifconfig()
+        print( 'ip = ' + status[0] )
+    addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
+
+    s = socket.socket()
+    s.bind(addr)
+    s.listen(1)
+
+    print('listening on', addr)
+#wifi_on()
+    
+def wifi_off():
+    wlan.disconnect()
+    wlan.active(False)
+    print("wifi off")
+    
 def vin_check():
     global pd_vin, dc_vin, vin
     
@@ -356,15 +420,17 @@ def joystick_check():
     if 29200 < keysvalue < 30500:     # Down
         delta2 = time.ticks_diff(time.ticks_ms(), start2)
         last_event_time = time.ticks_ms()
+        if mcu2_en()==1:
+            mcu2_en(0)
+            time.sleep_ms(100)
+            start2 = time.ticks_ms()
+            return
         if lfp_automatic_charging == True:
             relay1(1)
             softstart_flag = False
             softstart_stage = 1
             softstart_step = 1
             lfp_automatic_charging = False
-        if mcu2_en()==1:
-            mcu2_en(0)
-            time.sleep_ms(300)
         
         if mcu2_en()==0 :
             if delta2 > 200:
@@ -504,19 +570,17 @@ def keyB_callback(pin):
     last_event_time = time.ticks_ms()
     if time.ticks_diff(time.ticks_ms(), button_debounce_timer) < 200:
         return
-    
     time.sleep_ms(5)
     button_time = time.ticks_ms()
     while True:
         x = time.ticks_diff(time.ticks_ms(), button_time)
         if x > 4000:
             return
-        if keyB==1:
+        if keyB()==1:
             break
     if x < 2:
         return
-    
-    key_B_handler(x)
+    key_B_handler()
     button_debounce_timer = time.ticks_ms()
     
 #keyB.irq(trigger=Pin.IRQ_FALLING, handler=keyB_callback)
@@ -667,23 +731,48 @@ def automatic_shutdown():
 
 lcd_refresh_part = 1
 def display():
-    #lcd
     global lcd_refresh_part
-
+    
+    if i_mA_1 > 0:
+        ind_pwr_1 = ("+")
+    else:
+        ind_pwr_1 = ("-")
+    if p_mW_1 < 100:
+        z4 = str(ind_pwr_1 + "%.0f" % p_mW_1 + "mW")
+    else:
+        z4 = str(ind_pwr_1 + "%.2f" % p_W_1 + "W")
+        
+    if i_mA_2 > 99:
+        a20 = str("%.1f" % i_A_2 + "A ")   
+    elif i_mA_2 < 100:
+        a20 = str("%.0f" % i_mA_2 + "mA  ")
+        
+    lipo_wh = str("%.1f" % (lipo_soc/1000) + "Wh")
+    
+    
+    #lcd
     if lcd_refresh_part == 1:
         if soc > 118400:
-            tft.text(font1, battery_percent, 5, 0, green_1)
+            tft.text(font1, battery_percent, 5, 5, green_1)
         if 118400 > soc > 44400:
-            tft.text(font1, battery_percent, 5, 0, orange_1)
+            tft.text(font1, battery_percent, 5, 5, orange_1)
         if soc < 44400:
-            tft.text(font1, battery_percent, 5, 0, red_1)
+            tft.text(font1, battery_percent, 5, 5, red_1)
          
-        tft.text(font1, str("%.0f" % temp_bat + "C"), 125, 0, cyan_1)
-        
+        if temp_bat < 45:
+            tft.text(font1, str(" %.0f" % temp_bat + "C"), 125, 5, cyan_1)
+        else:
+            tft.text(font1, str(" %.0f" % temp_bat + "C"), 125, 5, orange_1)
+            
     if lcd_refresh_part == 2:
-        pass
-    if lcd_refresh_part < 7:
-        lcd_refresh_part = lcd_refresh_part + 1
+        if wlan.active() == True:
+            if wlan.status() == 3:
+                tft.text(font1, str(status[0]), 5, 200)
+            else:
+                tft.text(font1, str("               "), 5, 200)
+                
+    if lcd_refresh_part < 6:
+        lcd_refresh_part += 1
     else:
         lcd_refresh_part = 1
     
@@ -728,25 +817,9 @@ while True:
         if temp_bat > 65:
             shutdown = True
     
-    if i_mA_1 > 0:
-        ind_pwr_1 = ("+")
-    else:
-        ind_pwr_1 = ("-")
-    if p_mW_1 < 100:
-        z4 = str(ind_pwr_1 + "%.0f" % p_mW_1 + "mW")
-    else:
-        z4 = str(ind_pwr_1 + "%.1f" % p_W_1 + "W")
-        
-    if i_mA_2 > 99:
-        a20 = str("%.1f" % i_A_2 + "A ")   
-    elif i_mA_2 < 100:
-        a20 = str("%.0f" % i_mA_2 + "mA  ")
-        
-    lipo_wh = str("%.1f" % (lipo_soc/1000) + "Wh")
-    
     display()   
     
-    automatic_shutdown()
+    #automatic_shutdown()
     if shutdown == True:
         print("shutting down")
         break
@@ -778,13 +851,9 @@ with open("soc.txt", "w") as file:
     file.write(str(soc))
     print("soc saved")
 time.sleep_ms(200)
-
+buck_1(0)
 while True:
     vin_check()
-    if vin < 5:
-        buck_1(0)
-        time.sleep_ms(25)
-        buck_1(1)
     if keyA()==0:
        time.sleep_ms(20)
        if keyA()==0:
