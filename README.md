@@ -26,7 +26,7 @@ Specs:
 - 2x 5v cooling fans
 - 4 automatic input charging modes 
 
-!(picture/PXL_20230528_164307744.jpg)
+![back](picture/PXL_20230528_164307744.jpg)
 ## Body
 - 3d printed PLA body, the front and back being seperate 3d prints
 - 8 threaded inserts to hold battery pack, components module in place
