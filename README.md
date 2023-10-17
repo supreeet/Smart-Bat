@@ -1,6 +1,6 @@
 # Smart-Bat
 
-![PXL_20231012_155246602 NIGHT~2](https://github.com/supreeet/Smart-Bat/assets/117578605/c3b0216e-6c81-44da-8e9c-a7f24dcf5ddc)
+![PXL_20231012_155246602 NIGHT~2](https://github.com/supreeet/Smart-Bat/assets/117578605/986549d3-6fd5-4c70-8ac1-46886cc4ab86)
 
 # Design
 Features:
