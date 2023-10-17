@@ -54,8 +54,9 @@ The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b125848
 
 ## Display
 
-![oled](picture/PXL_20231009_084727147.MP.jpg)
-- 0.96 inch 128x32 monochrome OLED ('SSD1306')
 
-![lcd](picture/PXL_20231016_141914945.jpg)
-- 1.3 inch 240x240 RGB LCD ('ST7789')
+- ![oled](picture/PXL_20231009_084727147.MP.jpg)
+  0.96 inch 128x32 monochrome OLED ('SSD1306')
+
+- ![lcd](picture/PXL_20231016_141914945.jpg)
+  1.3 inch 240x240 RGB LCD ('ST7789')
