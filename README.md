@@ -1,6 +1,6 @@
 # Smart-Bat
 
-![PXL_20231012_155246602 NIGHT~2](https://github.com/supreeet/Smart-Bat/assets/117578605/986549d3-6fd5-4c70-8ac1-46886cc4ab86)
+![intro](picture/PXL_20231012_155246602.NIGHT~2.jpg)
 
 # Design
 Features:
@@ -26,21 +26,19 @@ Specs:
 - 2x 5v cooling fans
 - 4 automatic input charging modes 
 
-![back](picture/PXL_20230528_164307744.jpg)
+![back view](picture/PXL_20230528_164307744.jpg)
 ## Body
 - 3d printed PLA body, the front and back being seperate 3d prints
 - 8 threaded inserts to hold battery pack, components module in place
 - reinforcing carbon fibre rods glued with 2 part epoxy on bottom 
 - top cover is laser cut acrylic sheet held with 8 m3 screws
 
-![PXL_20230427_144759748](https://github.com/supreeet/Smart-Bat/assets/117578605/0d0594ba-5732-4e7c-8b5e-9874ee02e547)
-
+![main body view](picture/PXL_20230427_144759748.jpg)
 
 ## Components module
 The components module consists of two voltage/current sensors from Texas Instruments ('INA219'), digital potentiometer, two dc-dc voltage regulators, 4x 20A Relays with a covering pcb on top 
 
-![PXL_20230902_114550286](https://github.com/supreeet/Smart-Bat/assets/117578605/beb3b379-55a5-48b5-94d1-038cded38f5b)
-
+![components module](picture/PXL_20230902_114550286.jpg)
 
 ## PCB
 The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b1258488c426cedcd1ec/pcb) includes:
@@ -56,8 +54,8 @@ The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b125848
 
 ## Display
 
-![PXL_20231009_084727147 MP](https://github.com/supreeet/Smart-Bat/assets/117578605/2555a323-54d2-4e25-9476-a658eb287023)
+![oled](picture/PXL_20231009_084727147.MP.jpg)
 - 0.96 inch 128x32 monochrome OLED ('SSD1306')
 
-![PXL_20231016_141914945](https://github.com/supreeet/Smart-Bat/assets/117578605/89fad8a6-ba0c-4199-91aa-79aecf7d10f0)
+![lcd](picture/PXL_20231016_141914945.jpg)
 - 1.3 inch 240x240 RGB LCD ('ST7789')
