@@ -47,16 +47,16 @@ The [pcb](https://github.com/supreeet/Smart-Bat/tree/a5d27a213e3fed6b2bf3b125848
 - 2x 4 pin fan connector
 - monochrome OLED display
 - CH224K USB-C sink controller
-
 - 3x voltage divider circuits for ADC conversion
 - 5x PNP transistor
 
 
 ## Display
 
+- 0.96 inch 128x32 monochrome OLED ('SSD1306')
+  ![oled](picture/PXL_20231009_084727147.MP.jpg)
 
-- ![oled](picture/PXL_20231009_084727147.MP.jpg)
-  0.96 inch 128x32 monochrome OLED ('SSD1306')
 
-- ![lcd](picture/PXL_20231016_141914945.jpg)
-  1.3 inch 240x240 RGB LCD ('ST7789')
+- 1.3 inch 240x240 RGB LCD ('ST7789')
+  ![lcd](picture/PXL_20231016_141914945.jpg)
+  
