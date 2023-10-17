@@ -15,7 +15,8 @@ fan2.duty_u16(5000)
 buck_1 = Pin(18, Pin.OUT)     # Primary +5v
 buck_2 = Pin(19, Pin.OUT)     # Secondary +5v
 
-buck_1(1)
+     
+buck_1(0)
 buck_2(0)
 
 mcu2_en = Pin(22,Pin.OUT, Pin.PULL_DOWN)
@@ -68,7 +69,6 @@ if oled_available == True:
 
 import st7789py as st7789
 from fonts import vga1_16x32 as font1
-from fonts import vga2_8x8 as font2
 import  ahtx0, _thread, network, socket, framebuf
 from ina219 import INA219
 from ina219 import DeviceRangeError
@@ -352,22 +352,8 @@ def charging_check():
                 softstart_last_step_time = time.ticks_ms()
                 relay1(1)
                 mcu2_en(1)
-
-            if v1 > 14.3:        # battery fully charged
-                if relay1() == 0:
-                    if v1 > 14.3:
-                        if i_mA_1 < 50:
-                            soc = full_battery_capacity
-                            print("battery fully charged")
-                            relay1(1)
-                            command = {'A': 'OC_OFF'}         
-                            com1.send(str(json.dumps(command)))
-                            softstart_last_step_time = time.ticks_ms()
-                            softstart_flag = False
-                            softstart_stage = 1
-                            softstart_step = 1
-        
-        
+    
+    
         if relay1()==1 and softstart_flag == False:  # turn on charging
             if soc < full_battery_capacity*0.98:
                 if vin > 14:
@@ -376,15 +362,34 @@ def charging_check():
                         time.sleep_ms(300)
                     softstart_flag = True
                     print("charging")
+                    
+                    
+                    
+    if relay1() == 0:    # battery fully charged
+        if v1 > 14.3:        
+            if relay1() == 0:
+                if v1 > 14.3:
+                    if i_mA_1 < 50:
+                        soc = full_battery_capacity
+                        print("battery fully charged")
+                        relay1(1)
+                        command = {'A': 'OC_OFF'}         
+                        com1.send(str(json.dumps(command)))
+                        softstart_last_step_time = time.ticks_ms()
+                        softstart_flag = False
+                        softstart_stage = 1
+                        softstart_step = 1
+        
 
     # Lipo
     if relay2()==0:
-        if v2 > 16.6:
+        if v2 > 16.65:
             time.sleep_ms(10)
             v2 = ina2.voltage()
             if v2 > 16.6:
-                print("lipo charged")
-                relay2(1)
+                if i_mA_2 < 100:
+                    print("lipo charged")
+                    relay2(1)
 
 start2 = time.ticks_ms()
 def joystick_check():
@@ -413,7 +418,9 @@ def joystick_check():
                     np[i] = (253, 240, 135)
                 np.write()
                 led_=3
-                    
+            elif led_ == 3:
+                led_ = 4
+            
             else:
                 for i in range(19):
                     np[i] = (0,0,0)
@@ -423,6 +430,8 @@ def joystick_check():
         
     if 29200 < keysvalue < 30500:     # Down
         delta2 = time.ticks_diff(time.ticks_ms(), start2)
+        if delta2 < 200:
+            return
         last_event_time = time.ticks_ms()
         if mcu2_en()==1:
             mcu2_en(0)
@@ -437,36 +446,35 @@ def joystick_check():
             lfp_automatic_charging = False
         
         if mcu2_en()==0 :
-            if delta2 > 200:
-                led_w.on()
-                time.sleep_ms(30)
-                led_w.off()
+            led_w.on()
+            time.sleep_ms(30)
+            led_w.off()
+            
+            if manual_lfp_current == 1:
+                command = {'A': 'OC_OFF'}         
+                com1.send(str(json.dumps(command)))
+                start2 = time.ticks_ms()
+                manual_lfp_current = 2
+
+            elif manual_lfp_current == 2:
+                lfpcharging(1)
+                start2 = time.ticks_ms()
+                manual_lfp_current = 3
+
+            elif manual_lfp_current == 3:
+                command = {'A': 'OC_ON'}         
+                com1.send(str(json.dumps(command)))
+                start2 = time.ticks_ms()
+                manual_lfp_current = 4
+
+            else:
+                lfpcharging(manual_lfp_current - 2)
+                start2 = time.ticks_ms()
                 
-                if manual_lfp_current == 1:
-                    command = {'A': 'OC_OFF'}         
-                    com1.send(str(json.dumps(command)))
-                    start2 = time.ticks_ms()
-                    manual_lfp_current = 2
-
-                elif manual_lfp_current == 2:
-                    lfpcharging(1)
-                    start2 = time.ticks_ms()
-                    manual_lfp_current = 3
-
-                elif manual_lfp_current == 3:
-                    command = {'A': 'OC_ON'}         
-                    com1.send(str(json.dumps(command)))
-                    start2 = time.ticks_ms()
-                    manual_lfp_current = 4
-
+                if manual_lfp_current == 6:
+                    manual_lfp_current = 1
                 else:
-                    lfpcharging(manual_lfp_current - 2)
-                    start2 = time.ticks_ms()
-                    
-                    if manual_lfp_current == 6:
-                        manual_lfp_current = 1
-                    else:
-                        manual_lfp_current = manual_lfp_current + 1
+                    manual_lfp_current = manual_lfp_current + 1
                         
             start2 = time.ticks_ms()
         
@@ -482,6 +490,8 @@ def joystick_check():
                 fan_1_extra = 2
             elif fan_1_extra == 2:
                 fan_1_extra = 4
+            elif fan_1_extra == 4:
+                fan_1_extra = 6
             else:
                 fan_1_extra = 0
         start2 = time.ticks_ms()
@@ -498,8 +508,11 @@ def joystick_check():
                 fan_2_extra = 2
             elif fan_2_extra == 2:
                 fan_2_extra = 4
+            elif fan_2_extra == 4:
+                fan_2_extra = 6
             else:
                 fan_2_extra = 0
+                
         start2 = time.ticks_ms()
     
     if 8000 < keysvalue < 9000:       # ctrl
@@ -541,10 +554,13 @@ def soc_calculation(source):
 soc_timer = Timer(period=20, mode=Timer.PERIODIC, callback=soc_calculation)
 
 tft = st7789.ST7789(SoftSPI(polarity=1, sck=Pin(14), mosi=Pin(15), miso = Pin(6)), 240,240,reset=Pin(8, Pin.OUT),dc=Pin(9, Pin.OUT),rotation=1)
+
 green_1 = st7789.color565(0, 255, 0)
 orange_1 = st7789.color565(220, 255, 0)
 red_1 = st7789.color565(255, 0, 0)
 cyan_1 = st7789.color565(0, 255, 255)
+golden_1 = st7789.color565(200, 200, 0)
+white_1 = st7789.color565(255, 255, 255)
 
 def key_A_handler():
     global shutdown
@@ -739,9 +755,11 @@ def automatic_shutdown():
                 if time.ticks_diff(time.ticks_ms(), last_event_time) > 30000:
                     shutdown = True
 
+tft_3_time = time.ticks_ms()
+tft_3_part = 1
 lcd_refresh_part = 1
 def display():
-    global lcd_refresh_part
+    global lcd_refresh_part, tft_3_time, tft_3_part
     
     if i_mA_1 > 0:
         ind_pwr_1 = ("+")
@@ -750,7 +768,7 @@ def display():
     if p_mW_1 < 100:
         z4 = str(ind_pwr_1 + "%.0f" % p_mW_1 + "mW")
     else:
-        z4 = str(ind_pwr_1 + "%.2f" % p_W_1 + "W")
+        z4 = str(ind_pwr_1 + "%.1f" % p_W_1 + "W")
         
     if i_mA_2 > 99:
         a20 = str("%.1f" % i_A_2 + "A ")   
@@ -758,29 +776,102 @@ def display():
         a20 = str("%.0f" % i_mA_2 + "mA  ")
         
     lipo_wh = str("%.1f" % (lipo_soc/1000) + "Wh")
-    
-    
+
+
     #lcd
     if lcd_refresh_part == 1:
         if soc > 118400:
-            tft.text(font1, battery_percent, 5, 5, green_1)
+            tft.text(font1, battery_percent + " ", 5, 5, green_1)
         if 118400 > soc > 44400:
-            tft.text(font1, battery_percent, 5, 5, orange_1)
+            tft.text(font1, battery_percent + " ", 5, 5, orange_1)
         if soc < 44400:
-            tft.text(font1, battery_percent, 5, 5, red_1)
-         
+            tft.text(font1, battery_percent + " ", 5, 5, red_1)
+        
         if temp_bat < 45:
-            tft.text(font1, str(" %.0f" % temp_bat + "C"), 125, 5, cyan_1)
+            tft.text(font1, str(" %.0f" % temp_bat + "C "), 125, 5, cyan_1)
         else:
-            tft.text(font1, str(" %.0f" % temp_bat + "C"), 125, 5, orange_1)
-            
+            tft.text(font1, str(" %.0f" % temp_bat + "C "), 125, 5, orange_1)
+
     if lcd_refresh_part == 2:
+        if lfp_automatic_charging == False:
+            tft_B2 = "M" + str(lfpspeed)
+        else:
+            if pd_vin > dc_vin and relay1()==0:
+                tft_B2 = "A" + str(pd_charge_current)
+            else:
+                tft_B2 = "A" + str(dc_charge_current)
+        
+        tft.text(font1, tft_B2,145,38, golden_1)
+        
+        if vin > 3:
+            if pd_vin > dc_vin:
+                tft.text(font1, str("PD: " + "%.0f" % vin), 10, 38, golden_1)
+            else:
+                tft.text(font1, str("DC: " + "%.0f" % vin), 10, 38, golden_1)
+        else:
+            tft.text(font1, str("VIN:0"), 10, 38, golden_1)
+        tft.hline(0, 75, 240, white_1)   
+        
+    if lcd_refresh_part == 3:
+        if v2 > 3:
+            if time.ticks_diff(time.ticks_ms(), tft_3_time)>5000:
+                if tft_3_part == 1:
+                    tft_3_part = 2
+                else:
+                    tft_3_part = 1
+                tft_3_time = time.ticks_ms()
+                
+            if tft_3_part == 1:
+                tft.text(font1, str("%.1fv  " %  v2 + a20), 13, 85, orange_1)
+                tft_3_part = 2
+            else:
+                tft.text(font1, str("%.0fWh  " % lipo_soc + "%.1fW " % p_W_2), 13, 85, orange_1)
+                tft_3_part = 1
+                
+                
+    if lcd_refresh_part == 4:
+        if buck_2()==1:
+            #fan 1
+            if fan_1_extra < 1:
+                tft_f1 = '0%'
+                
+            if 0 < fan_1_extra < 3:
+                tft_f1 = '30%'
+                
+            if 2 < fan_1_extra < 5:
+                tft_f1 = '70%'
+                
+            if 4 < fan_1_extra:
+                tft_f1 = '100%'
+            
+            #fan 2
+            if fan_2_extra < 1:
+                tft_f2 = '0%'
+                
+            if 0 < fan_2_extra < 3:
+                tft_f2 = '30%'
+                
+            if 2 < fan_2_extra < 5:
+                tft_f2 = '70%'
+                
+            if 4 < fan_2_extra:
+                tft_f2 = '100%'
+                
+            tft.text(font1, str('F1:' + tft_f1 + ' 2:' + tft_f2 + '  '), 10, 120, cyan_1)
+        else:
+            tft.text(font1, str('               '), 0, 120, cyan_1)
+    if lcd_refresh_part == 5:
+        pass
+    
+    if lcd_refresh_part == 6:
         if wlan.active() == True:
             if wlan.status() == 3:
-                tft.text(font1, str(status[0]), 5, 200)
+                tft.text(font1, str(status[0]), 5, 165)
         else:
             tft.text(font1, str("               "), 5, 200)
-                
+            
+        tft.hline(0, 160, 240, white_1)
+        
     if lcd_refresh_part < 6:
         lcd_refresh_part += 1
     else:
@@ -811,7 +902,7 @@ def display():
         oled.show()
        
 
-    
+
 shutdown = False  
 while True:
     if softstart_flag == True:
@@ -851,17 +942,19 @@ relay4(1)
 soc_timer.deinit()
 buck_2(0)
 mcu2_en(1)
+
+with open("soc.txt", "w") as file:
+    file.write(str(soc))
+    print("soc saved")
+time.sleep_ms(200)
+buck_1(1)
+time.sleep_ms(100)
 if oled_available == True:
     oled.fill(0)
     oled.text("OFF", 35, 13)
     oled.text(battery_percent, 35, 0)
     oled.show()
 
-with open("soc.txt", "w") as file:
-    file.write(str(soc))
-    print("soc saved")
-time.sleep_ms(200)
-buck_1(0)
 while True:
     vin_check()
     if keyA()==0:
