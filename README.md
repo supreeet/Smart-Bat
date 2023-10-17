@@ -26,8 +26,7 @@ Specs:
 - 2x 5v cooling fans
 - 4 automatic input charging modes 
 
-![PXL_20230528_164307744](https://github.com/supreeet/Smart-Bat/117578605/83f174b7-149f-46f5-9416-b6dc13038b5f)
-
+picture/PXL_20230528_164307744.jpg
 
 ## Body
 - 3d printed PLA body, the front and back being seperate 3d prints
