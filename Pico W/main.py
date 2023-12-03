@@ -27,7 +27,7 @@ pd_charge_current = 2   # target peak current for automatic charging from type C
 
 mcu2_on_time = time.ticks_ms()
 manual_lfp_current = 2             # step for manual charging
-lfp_automatic_charging = True      # True if current is changed or relay is switched manually 
+lfp_automatic_charging = True      # False if current is changed or relay is switched manually 
 
 relay1 = Pin(10, Pin.OUT)   # LFP charge
 relay2 = Pin(13, Pin.OUT)   # Lipo charging
