@@ -24,7 +24,7 @@ Specs:
 - 1x XT-60 for direct battery voltage output at upto 256 Watts
 - 1x XT-60 for charging external 4s lithium ion battery at upto 33 Watts
 - 2x 5v cooling fans
-- 4 automatic input charging modes 
+- 4 automatic and 4 manual charging modes 
 
 ![back view](picture/PXL_20230528_164307744.jpg)
 ## Body
