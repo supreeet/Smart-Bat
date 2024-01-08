@@ -28,7 +28,7 @@ Specs:
 
 ![back view](picture/PXL_20230528_164307744.jpg)
 ## Body
-- 3d printed PLA body, the front and back being seperate 3d prints
+- 3D printed PLA body, the front and back being seperate 3D prints
 - 8 threaded inserts to hold battery pack, components module in place
 - reinforcing carbon fibre rods on the bottom 
 - top cover is laser cut acrylic sheet held with 8 m3 screws
@@ -36,7 +36,7 @@ Specs:
 ![main body view](picture/PXL_20230427_144759748.jpg)
 
 ## Components module
-The components module consists of two voltage/current sensors from Texas Instruments ('INA219'), digital potentiometer, two dc-dc voltage regulators, 4x 20A Relays with a covering pcb on top 
+The components module consists of two voltage/current sensors from Texas Instruments ('INA219'), digital potentiometer, two dc-dc voltage regulators, 4x 20A Relays all connected through a custom pcb.
 
 ![components module](picture/PXL_20230902_114550286.jpg)
 
