@@ -5,14 +5,13 @@
 # Design
 Features:
 - Lithium-ion battery pack capable of charging a regular phone 12x times
-- can charge 5x devices and 1x 4s lithium battery simultaneously 
+- Capable of providing power to 7x device simultaneously
 - USB-C and DC input port, can be fully charged in less than 3 hours
-- coloured LCD with automatic brightness adjustment
-- joystick and buttons for easy interaction
-- can be wirelessly controlled with a phone or laptop via browser
+- Coloured LCD with automatic brightness adjustment
+- Joystick and buttons for easy interaction
+- Wirelessly controlled with a phone or laptop via browser
 - 3 lamp modes with different intensities
 - over-temperature, over-current, short-circuit, over-voltage, under-voltage protection
-
 
 Specs:
 - 12.8v 153 Watt hour lithium iron phosphate ('LiFePo4') battery pack
